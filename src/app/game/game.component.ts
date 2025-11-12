@@ -10,4 +10,10 @@ import { CommonModule } from '@angular/common';
 })
 export class GameComponent {
 
+  pickCardAnimation = false;
+
+  takeCard(){
+    this.pickCardAnimation = true;
+  }
+
 }
