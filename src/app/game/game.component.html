@@ -4,6 +4,6 @@
     <img [ngStyle]="{ right: i * 5 + 'px' }" src="/assets/img/cards/card_cover.png" alt="Cardcover"/>
     }
     <img (click)="takeCard()" class="top-card" style="right: 25px;" src="/assets/img/cards/card_cover.png" alt="Covercard">
-    <img (click)="takeCard()" *ngIf="pickCardAnimation" class="pick-card" style="right: 25px;" src="/assets/img/cards/ace_1.png" alt="Acecard">
+    <img (click)="takeCard()" *ngIf="pickCardAnimation" class="pick-card" style="right: 25px;" src="/assets/img/cards/{{ currentCard }}.png" alt="Acecard">
   </div>
 </div>
