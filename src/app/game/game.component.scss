@@ -10,11 +10,20 @@
 
 .card-stack {
   position: relative;
+  cursor: pointer;
   img {
     position: absolute;
     width: 120px;
   }
 }
+
+// .top-card {
+//   cursor: pointer;
+//   transition: all 125ms ease-in-out;
+//   &:hover {
+//     transform: scale(1.1) translateY(-10px);
+//   }
+// }
 
 .pick-card {
   animation: pick-card-animation 1s ease-in-out;
