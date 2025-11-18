@@ -3,3 +3,13 @@ body {
 }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+// .mat-mdc-card-content:last-child {
+//     padding-bottom: 0; 
+// }
+
+.mat-mdc-card-title {
+    display: block;
+    padding: 16px 0 0 16px;
+
+}
