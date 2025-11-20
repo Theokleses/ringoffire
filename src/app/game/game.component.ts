@@ -7,7 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
 import { GameInfoComponent } from '../game-info/game-info.component';
-import { Firestore, collection, collectionData } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, addDoc } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-game',
@@ -58,6 +58,8 @@ export class GameComponent {
 
   newGame() {
     this.game = new Game();
+    const gameRef = collection(this.firestore, 'games');
+    addDoc(gameRef, this.game.toJson());
   }
 
   openDialog(): void {
