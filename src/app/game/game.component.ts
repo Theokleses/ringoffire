@@ -7,7 +7,15 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
 import { GameInfoComponent } from '../game-info/game-info.component';
-import { Firestore, collection, collectionData, addDoc } from '@angular/fire/firestore';
+import {
+  Firestore,
+  collection,
+  collectionData,
+  addDoc,
+  doc,
+  docData,
+} from '@angular/fire/firestore';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-game',
@@ -29,12 +37,35 @@ export class GameComponent {
 
   private dialog = inject(MatDialog);
   private firestore = inject(Firestore);
+  private route = inject(ActivatedRoute);
+
+  // ngOnInit(): void {
+  //   this.newGame();
+  //   this.route.params.subscribe((params) => {
+  //     console.log(params);
+
+  //     const gameRef = collection(this.firestore, 'games');
+  //     collectionData(gameRef).subscribe((game) => {
+  //       console.log('Game update', game);
+  //     });
+  //   });
+  // }
 
   ngOnInit(): void {
     this.newGame();
-    const gameRef = collection(this.firestore, 'games');
-    collectionData(gameRef).subscribe((game) => {
-      console.log('Game update', game);
+
+    this.route.params.subscribe((params) => {
+      console.log(params);
+
+      const gameDocRef = doc(this.firestore, 'games', params['id']);
+
+      docData(gameDocRef).subscribe((game: any) => {
+        console.log('game update', game);
+        this.game.currentPlayer = game.currentPlayer;
+        this.game.playedCards = game.playedCards;
+        this.game.players = game.players;
+        this.game.stack = game.stack;
+      });
     });
   }
 
@@ -58,8 +89,8 @@ export class GameComponent {
 
   newGame() {
     this.game = new Game();
-    const gameRef = collection(this.firestore, 'games');
-    addDoc(gameRef, this.game.toJson());
+    // const gameRef = collection(this.firestore, 'games');
+    // addDoc(gameRef, this.game.toJson());
   }
 
   openDialog(): void {
