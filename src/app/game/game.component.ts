@@ -11,6 +11,7 @@ import {
   Firestore,
   doc,
   docData,
+  updateDoc,
 } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
 
@@ -31,6 +32,7 @@ export class GameComponent {
   pickCardAnimation = false;
   currentCard: string = '';
   game: Game = new Game();
+  gameId: string = '';
 
   private dialog = inject(MatDialog);
   private firestore = inject(Firestore);
@@ -53,8 +55,9 @@ export class GameComponent {
 
     this.route.params.subscribe((params) => {
       console.log(params);
+      this.gameId = params['id'];
 
-      const gameDocRef = doc(this.firestore, 'games', params['id']);
+      const gameDocRef = doc(this.firestore, 'games', this.gameId);
 
       docData(gameDocRef).subscribe((game: any) => {
         console.log('game update', game);
@@ -69,10 +72,10 @@ export class GameComponent {
   takeCard() {
     if (!this.pickCardAnimation) {
       this.currentCard = this.game.stack.pop() || '';
-      console.log(this.currentCard);
       this.pickCardAnimation = true;
       console.log(this.game);
       console.log(this.currentCard);
+      this.saveGame();
       this.game.currentPlayer++;
       this.game.currentPlayer =
         this.game.currentPlayer % this.game.players.length;
@@ -80,6 +83,7 @@ export class GameComponent {
       setTimeout(() => {
         this.game.playedCards.push(this.currentCard);
         this.pickCardAnimation = false;
+        this.saveGame();
       }, 1000);
     }
   }
@@ -94,7 +98,13 @@ export class GameComponent {
     dialogRef.afterClosed().subscribe((name: string) => {
       if (name && name.length > 0) {
         this.game.players.push(name);
+        this.saveGame();
       }
     });
+  }
+
+  saveGame(){
+    const gameDocRef = doc(this.firestore, 'games', this.gameId);
+    updateDoc(gameDocRef, this.game.toJson());
   }
 }
