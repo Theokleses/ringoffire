@@ -76,10 +76,10 @@ export class GameComponent {
       this.game.pickCardAnimation = true;
       console.log(this.game);
       console.log(this.game.currentCard);
-      this.saveGame();
       this.game.currentPlayer++;
       this.game.currentPlayer =
-        this.game.currentPlayer % this.game.players.length;
+      this.game.currentPlayer % this.game.players.length;
+      this.saveGame();
 
       setTimeout(() => {
         this.game.playedCards.push(this.game.currentCard);
