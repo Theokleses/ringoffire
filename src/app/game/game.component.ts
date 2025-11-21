@@ -29,8 +29,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrl: './game.component.scss',
 })
 export class GameComponent {
-  pickCardAnimation = false;
-  currentCard: string = '';
+
   game: Game = new Game();
   gameId: string = '';
 
@@ -65,24 +64,26 @@ export class GameComponent {
         this.game.playedCards = game.playedCards;
         this.game.players = game.players;
         this.game.stack = game.stack;
+        this.game.pickCardAnimation = game.pickCardAnimation;
+        this.game.currentCard = game.currentCard;
       });
     });
   }
 
   takeCard() {
-    if (!this.pickCardAnimation) {
-      this.currentCard = this.game.stack.pop() || '';
-      this.pickCardAnimation = true;
+    if (!this.game.pickCardAnimation) {
+      this.game.currentCard = this.game.stack.pop() || '';
+      this.game.pickCardAnimation = true;
       console.log(this.game);
-      console.log(this.currentCard);
+      console.log(this.game.currentCard);
       this.saveGame();
       this.game.currentPlayer++;
       this.game.currentPlayer =
         this.game.currentPlayer % this.game.players.length;
 
       setTimeout(() => {
-        this.game.playedCards.push(this.currentCard);
-        this.pickCardAnimation = false;
+        this.game.playedCards.push(this.game.currentCard);
+        this.game.pickCardAnimation = false;
         this.saveGame();
       }, 1000);
     }
