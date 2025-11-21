@@ -9,9 +9,6 @@ import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player
 import { GameInfoComponent } from '../game-info/game-info.component';
 import {
   Firestore,
-  collection,
-  collectionData,
-  addDoc,
   doc,
   docData,
 } from '@angular/fire/firestore';
@@ -89,8 +86,6 @@ export class GameComponent {
 
   newGame() {
     this.game = new Game();
-    // const gameRef = collection(this.firestore, 'games');
-    // addDoc(gameRef, this.game.toJson());
   }
 
   openDialog(): void {
